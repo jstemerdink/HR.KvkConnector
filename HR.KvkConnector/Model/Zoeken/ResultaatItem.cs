@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
+using HR.KvkConnector.Model.Zoeken;
 
 namespace HR.KvkConnector.Model.Zoeken
 {
@@ -34,6 +35,9 @@ namespace HR.KvkConnector.Model.Zoeken
         /// </summary>
         [DataMember(Name = "handelsnaam")]
         public string Handelsnaam { get; set; }
+
+        [DataMember(Name = "adres")]
+        public Adres Adres { get; set; }
 
         [DataMember(Name = "straatnaam")]
         public string Straatnaam { get; set; }

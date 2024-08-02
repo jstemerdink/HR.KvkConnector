@@ -33,7 +33,7 @@ namespace HR.KvkConnector.Model.Zoeken
         /// <summary>
         /// De naam waaronder een vestiging of rechtspersoon handelt.
         /// </summary>
-        [DataMember(Name = "handelsnaam")]
+        [DataMember(Name = "naam")]
         public string Handelsnaam { get; set; }
 
         [DataMember(Name = "straatnaam")]
@@ -96,7 +96,7 @@ namespace HR.KvkConnector.Model.Zoeken
         /// Kies het aantal resultaten per pagina, minimaal 1 en maximaal 100.
         /// Default value: 10
         /// </summary>
-        [DataMember(Name = "aantal")]
+        [DataMember(Name = "resultatenPerPagina")]
         public int? Aantal { get; set; }
 
         /// <inheritdoc/>
@@ -115,8 +115,23 @@ namespace HR.KvkConnector.Model.Zoeken
 
                     if (propertyValue != null && propertyValue.ToString().Length != 0)
                     {
-                        queryStringBuilder.Append(separator).Append(propertyName).Append('=').Append(Uri.EscapeDataString(propertyValue.ToString()));
-                        separator = '&';
+                        // Due to changes in the search api every type is a separate query parameter
+                        if (propertyName.Equals("type", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var arrayValues = propertyValue.ToString()
+                                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                            foreach (var arrayValue in arrayValues)
+                            {
+                                queryStringBuilder.Append(separator).Append(propertyName).Append('=').Append(Uri.EscapeDataString(arrayValue.Trim()));
+                                separator = '&';
+                            }
+                        }
+                        else
+                        {
+                            queryStringBuilder.Append(separator).Append(propertyName).Append('=').Append(Uri.EscapeDataString(propertyValue.ToString()));
+                            separator = '&';
+                        }
                     }
                 }
             }

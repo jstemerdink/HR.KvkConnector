@@ -34,7 +34,7 @@ namespace HR.KvkConnector
             try
             {
                 return await GetFromJsonAsync<Resultaat>(
-                    requestUri: $"{baseUri}/zoeken{parameters}",
+                    requestUri: $"{baseUri}/v2/zoeken{parameters}",
                     cancellationToken).WithoutCapturingContext();
             }
             catch (ApiException exception) when (exception.StatusCode == HttpStatusCode.NotFound)
@@ -46,31 +46,31 @@ namespace HR.KvkConnector
         /// <inheritdoc/>
         public async Task<Vestiging> GetVestigingsprofielAsync(string vestigingsnummer, bool geoData = false, CancellationToken cancellationToken = default)
             => await GetFromJsonAsync<Vestiging>(
-                requestUri: $"{baseUri}/vestigingsprofielen/{Uri.EscapeDataString(vestigingsnummer)}?geoData={geoData}",
+                requestUri: $"{baseUri}/v1/vestigingsprofielen/{Uri.EscapeDataString(vestigingsnummer)}?geoData={geoData}",
                 cancellationToken).WithoutCapturingContext();
 
         /// <inheritdoc/>
         public async Task<Basisprofiel> GetBasisprofielAsync(string kvkNummer, bool geoData = false, CancellationToken cancellationToken = default)
             => await GetFromJsonAsync<Basisprofiel>(
-                requestUri: $"{baseUri}/basisprofielen/{Uri.EscapeDataString(kvkNummer)}?geoData={geoData}",
+                requestUri: $"{baseUri}/v1/basisprofielen/{Uri.EscapeDataString(kvkNummer)}?geoData={geoData}",
                 cancellationToken).WithoutCapturingContext();
 
         /// <inheritdoc/>
         public async Task<Eigenaar> GetEigenaarAsync(string kvkNummer, bool geoData = false, CancellationToken cancellationToken = default)
             => await GetFromJsonAsync<Eigenaar>(
-                requestUri: $"{baseUri}/basisprofielen/{Uri.EscapeDataString(kvkNummer)}/eigenaar?geoData={geoData}",
+                requestUri: $"{baseUri}/v1/basisprofielen/{Uri.EscapeDataString(kvkNummer)}/eigenaar?geoData={geoData}",
                 cancellationToken).WithoutCapturingContext();
 
         /// <inheritdoc/>
         public async Task<Vestiging> GetHoofdvestigingAsync(string kvkNummer, bool geoData = false, CancellationToken cancellationToken = default)
             => await GetFromJsonAsync<Vestiging>(
-                requestUri: $"{baseUri}/basisprofielen/{Uri.EscapeDataString(kvkNummer)}/hoofdvestiging?geoData={geoData}",
+                requestUri: $"{baseUri}/v1/basisprofielen/{Uri.EscapeDataString(kvkNummer)}/hoofdvestiging?geoData={geoData}",
                 cancellationToken).WithoutCapturingContext();
 
         /// <inheritdoc/>
         public async Task<VestigingList> GetVestigingenAsync(string kvkNummer, CancellationToken cancellationToken = default)
             => await GetFromJsonAsync<VestigingList>(
-                requestUri: $"{baseUri}/basisprofielen/{Uri.EscapeDataString(kvkNummer)}/vestigingen",
+                requestUri: $"{baseUri}/v1/basisprofielen/{Uri.EscapeDataString(kvkNummer)}/vestigingen",
                 cancellationToken).WithoutCapturingContext();
 
         private async Task<TResult> GetFromJsonAsync<TResult>(string requestUri, CancellationToken cancellationToken)
