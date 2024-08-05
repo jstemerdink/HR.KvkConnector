@@ -33,7 +33,7 @@ namespace HR.KvkConnector.Model.Zoeken
         /// <summary>
         /// De naam waaronder een vestiging of rechtspersoon handelt.
         /// </summary>
-        [DataMember(Name = "handelsnaam")]
+        [DataMember(Name = "naam")]
         public string Handelsnaam { get; set; }
 
         [DataMember(Name = "adres")]
